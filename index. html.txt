@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desafío Metabólico</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+<h1>Desafío Metabólico</h1>
+<div id="pregunta-contenedor">
+<p id="pregunta"></p>
+<ul id="opciones-contenedor">
+<li><button class="opcion" data-respuesta="A">A. </button></li>
+<li><button class="opcion" data-respuesta="B">B. </button></li>
+<li><button class="opcion" data-respuesta="C">C. </button></li>
+<li><button class="opcion" data-respuesta="D">D. </button></li>
+</ul>
+</div>
+<div id="resultado-contenedor" class="oculto">
+<p id="resultado-texto"></p>
+<button id="siguiente-pregunta">Siguiente Pregunta</button>
+</div>
+<div id="final-contenedor" class="oculto">
+<h2>¡Juego Terminado!</h2>
+<p id="puntuacion-final"></p>
+<button id="reiniciar-juego">Reiniciar Juego</button>
+</div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

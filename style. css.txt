@@ -1,0 +1,132 @@
+body {
+font-family: sans-serif;
+background-color: #e0f7fa; /* Azul claro */
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+margin: 0;
+}
+.container {
+background-color: #fff; /* Blanco */
+padding: 30px;
+border-radius: 8px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+text-align: center;
+}
+h1 {
+color: #00838f; /* Un tono de azul más oscuro para el título */
+margin-bottom: 20px;
+animation: fadeIn 1s ease-in-out; /* Animación de entrada para el título */
+}
+#pregunta-contenedor {
+margin-bottom: 20px;
+animation-name: slideInLeft;
+animation-duration: 0.5s;
+animation-timing-function: ease-out;
+}
+#pregunta {
+font-size: 1.2em;
+color: #333;
+margin-bottom: 15px;
+}
+#opciones-contenedor {
+list-style: none;
+padding: 0;
+}
+#opciones-contenedor li {
+margin-bottom: 10px;
+}
+.opcion {
+padding: 10px 20px;
+border: 1px solid #b2ebf2; /* Borde azul claro */
+border-radius: 5px;
+cursor: pointer;
+background-color: #b2ebf2; /* Fondo azul claro */
+color: #333;
+font-size: 1em;
+transition: background-color 0.3s ease, color 0.3s ease;
+animation: pulse 0.7s infinite alternate; /* Animación sutil para los botones */
+}
+.opcion:hover {
+background-color: #80deea; /* Un tono de azul más oscuro al pasar el ratón */
+color: #fff;
+}
+.correcto {
+background-color: #aaffaa !important;
+animation: tada 1s ease-in-out;
+}
+.incorrecto {
+background-color: #ffaaaa !important;
+animation: shake 0.5s ease-in-out;
+}
+.oculto {
+display: none;
+}
+#resultado-contenedor {
+margin-top: 20px;
+font-weight: bold;
+animation: fadeIn 0.5s ease-in-out;
+}
+#resultado-imagen {
+width: 80px;
+height: 80px;
+margin-bottom: 10px;
+}
+#siguiente-pregunta, #reiniciar-juego {
+padding: 10px 20px;
+background-color: #00acc1; /* Otro tono de azul */
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+font-size: 1em;
+margin-top: 15px;
+transition: background-color 0.3s ease;
+animation: slideInUp 0.5s ease-out;
+}
+#siguiente-pregunta:hover, #reiniciar-juego:hover {
+background-color: #00838f;
+}
+#final-contenedor {
+margin-top: 20px;
+animation: zoomIn 0.5s ease-in-out;
+}
+#puntuacion-final {
+font-size: 1.2em;
+font-weight: bold;
+margin-bottom: 15px;
+}
+/* Definición de animaciones */
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+@keyframes slideInLeft {
+from { transform: translateX(-100%); opacity: 0; }
+to { transform: translateX(0); opacity: 1; }
+}
+@keyframes pulse {
+0% { transform: scale(1); }
+100% { transform: scale(1.05); }
+}
+@keyframes tada {
+0% { transform: scale(1); }
+10%, 20% { transform: scale(0.9) rotate(-3deg); }
+30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+100% { transform: scale(1) rotate(0); }
+}
+@keyframes shake {
+0%, 100% { transform: translateX(0); }
+10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+@keyframes slideInUp {
+from { transform: translateY(50px); opacity: 0; }
+to { transform: translateY(0); opacity: 1; }
+}
+@keyframes zoomIn {
+from { transform: scale(0); opacity: 0; }
+to { transform: scale(1); opacity: 1; }
+}

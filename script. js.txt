@@ -1,0 +1,141 @@
+const preguntas = {
+"GLUCOLISIS": [
+{
+"pregunta": "¿Cuál es la molécula inicial en la glucólisis?",
+"opciones": ["Glucosa", "Piruvato", "Lactato", "Acetil-CoA"],
+"respuesta": "A",
+"animacion": "slideInDown" // Ejemplo de animación específica
+},
+{
+"pregunta": "¿Qué enzima cataliza la fosforilación de la glucosa a
+glucosa-6-fosfato?",
+"opciones": ["Fosfofructoquinasa-1", "Hexoquinasa/Glucoquinasa", "Piruvato
+quinasa", "Aldolasa"],
+"respuesta": "B",
+"animacion": "fadeIn"
+},
+// ... más preguntas
+],
+"FERMENTACIÓN LÁCTICA Y ALCOHÓLICA": [
+// ... preguntas
+{
+"pregunta": "¿Qué organismo es comúnmente utilizado en la fermentación
+alcohólica?",
+"opciones": ["E. coli", "Lactobacillus", "S. cerevisiae", "Streptococcus"],
+"respuesta": "C",
+"animacion": "slideInRight"
+}
+],
+// ... más temas con sus preguntas y animaciones
+};
+const imagenesAcierto = ["./img/correcto1.png", "./img/correcto2.png", "./img/correcto3.png"];
+// Rutas a tus imágenes de acierto
+const imagenesError = ["./img/incorrecto1.png", "./img/incorrecto2.png",
+"./img/incorrecto3.png"]; // Rutas a tus imágenes de error
+let temas = Object.keys(preguntas);
+let temaActualIndice = 0;
+let preguntaActualIndice = 0;
+let puntuacion = 0;
+const container = document.querySelector('.container');
+const preguntaElemento = document.getElementById('pregunta');
+const opcionesContenedor = document.getElementById('opciones-contenedor');
+const resultadoContenedor = document.getElementById('resultado-contenedor');
+const resultadoTexto = document.getElementById('resultado-texto');
+const resultadoImagen = document.createElement('img'); // Crear elemento de imagen
+resultadoImagen.id = 'resultado-imagen';
+resultadoContenedor.insertBefore(resultadoImagen, resultadoTexto); // Insertar antes del
+texto
+const siguientePreguntaBoton = document.getElementById('siguiente-pregunta');
+const finalContenedor = document.getElementById('final-contenedor');
+const puntuacionFinalTexto = document.getElementById('puntuacion-final');
+const reiniciarJuegoBoton = document.getElementById('reiniciar-juego');
+function mostrarPregunta() {
+const temaActual = temas[temaActualIndice];
+const preguntaActual = preguntas[temaActual][preguntaActualIndice];
+preguntaElemento.textContent = preguntaActual.pregunta;
+// Aplicar animación a la pregunta
+preguntaElemento.style.animation = ''; // Resetear animación anterior
+void preguntaElemento.offsetWidth; // Forzar un reflow para que la nueva animación se
+active
+preguntaElemento.style.animation = `${preguntaActual.animacion || 'fadeIn'} 0.5s
+ease-in-out`;
+opcionesContenedor.innerHTML = ''; // Limpiar opciones anteriores
+preguntaActual.opciones.forEach((opcion, indice) => {
+const li = document.createElement('li');
+const button = document.createElement('button');
+button.classList.add('opcion');
+button.dataset.respuesta = String.fromCharCode(65 + indice); // A, B, C, D
+button.textContent = `${String.fromCharCode(65 + indice)}. ${opcion}`;
+button.addEventListener('click', verificarRespuesta);
+li.appendChild(button);
+opcionesContenedor.appendChild(li);
+});
+resultadoContenedor.classList.add('oculto');
+siguientePreguntaBoton.classList.add('oculto');
+resultadoImagen.src = ''; // Limpiar imagen anterior
+}
+function verificarRespuesta(evento) {
+const respuestaSeleccionada = evento.target.dataset.respuesta;
+const temaActual = temas[temaActualIndice];
+const preguntaActual = preguntas[temaActual][preguntaActualIndice];
+const botonesOpciones = document.querySelectorAll('#opciones-contenedor button');
+botonesOpciones.forEach(boton => {
+if (boton.dataset.respuesta === preguntaActual.respuesta) {
+boton.classList.add('correcto');
+} else if (boton.dataset.respuesta === respuestaSeleccionada) {
+boton.classList.add('incorrecto');
+}
+boton.disabled = true; // Deshabilitar botones después de la selección
+});
+if (respuestaSeleccionada === preguntaActual.respuesta) {
+puntuacion++;
+resultadoTexto.textContent = "¡Correcto!";
+resultadoImagen.src = imagenesAcierto[Math.floor(Math.random() *
+imagenesAcierto.length)];
+} else {
+resultadoTexto.textContent = `Incorrecto. La respuesta correcta era
+${preguntaActual.respuesta}.`;
+resultadoImagen.src = imagenesError[Math.floor(Math.random() *
+imagenesError.length)];
+}
+resultadoContenedor.classList.remove('oculto');
+siguientePreguntaBoton.classList.remove('oculto');
+}
+function siguientePregunta() {
+const temaActual = temas[temaActualIndice];
+preguntaActualIndice++;
+if (preguntaActualIndice < preguntas[temaActual].length) {
+mostrarPregunta();
+} else {
+temaActualIndice++;
+preguntaActualIndice = 0;
+if (temaActualIndice < temas.length) {
+mostrarPregunta();
+} else {
+mostrarResultadoFinal();
+}
+}
+}
+function mostrarResultadoFinal() {
+preguntaElemento.classList.add('oculto');
+opcionesContenedor.classList.add('oculto');
+resultadoContenedor.classList.add('oculto');
+siguientePreguntaBoton.classList.add('oculto');
+puntuacionFinalTexto.textContent = `Tu puntuación final es: ${puntuacion} /
+${Object.values(preguntas).flat().length}`;
+finalContenedor.classList.remove('oculto');
+}
+function reiniciarJuego() {
+temaActualIndice = 0;
+preguntaActualIndice = 0;
+puntuacion = 0;
+preguntaElemento.classList.remove('oculto');
+opcionesContenedor.classList.remove('oculto');
+finalContenedor.classList.add('oculto');
+mostrarPregunta();
+}
+// Event listeners
+siguientePreguntaBoton.addEventListener('click', siguientePregunta);
+reiniciarJuegoBoton.addEventListener('click', reiniciarJuego);
+// Iniciar el juego
+mostrarPregunta();
